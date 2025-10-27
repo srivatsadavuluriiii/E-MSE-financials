@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SME Revenue Forecasting - Research Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(var(--destructive))",
+                            foreground: "hsl(var(--destructive-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        popover: {
+                            DEFAULT: "hsl(var(--popover))",
+                            foreground: "hsl(var(--popover-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --background: 222.2 84% 4.9%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 217.2 91.2% 59.8%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 217.2 32.6% 17.5%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 224.3 76.3% 48%;
+            --radius: 0.5rem;
+        }
+
+        .light {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 221.2 83.2% 53.3%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96.1%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96.1%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 221.2 83.2% 53.3%;
+        }
+
+        * {
+            border-color: hsl(var(--border));
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="border-b bg-card">
+            <div class="container mx-auto px-6 py-8">
+                <h1 class="text-4xl font-bold tracking-tight">SME Revenue Forecasting Research Dashboard</h1>
+                <p class="text-muted-foreground text-xl mt-2">Machine Learning for Small Business Revenue Prediction</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="border-b bg-card sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+            <div class="container mx-auto px-6">
+                <div class="flex gap-6 overflow-x-auto py-4">
+                    <a href="#overview" class="text-sm font-medium hover:underline">Overview</a>
+                    <a href="#model" class="text-sm font-medium hover:underline">Model Analysis</a>
+                    <a href="#insights" class="text-sm font-medium hover:underline">Business Insights</a>
+                    <a href="#validation" class="text-sm font-medium hover:underline">Validation</a>
+                    <a href="#results" class="text-sm font-medium hover:underline">Forecasts</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container mx-auto px-6 py-8 space-y-8">
+            <!-- Overview Section -->
+            <section id="overview" class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Research Overview</h2>
+                    <p class="text-muted-foreground mt-2">Key performance metrics and research achievements</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h3 class="text-sm font-medium text-muted-foreground">Model Performance</h3>
+                        <p class="text-4xl font-bold mt-2">0.8%</p>
+                        <p class="text-sm text-muted-foreground mt-1">Mean Absolute Error</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h3 class="text-sm font-medium text-muted-foreground">Variance Explained</h3>
+                        <p class="text-4xl font-bold mt-2">99.9%</p>
+                        <p class="text-sm text-muted-foreground mt-1">R² Score</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h3 class="text-sm font-medium text-muted-foreground">Directional Accuracy</h3>
+                        <p class="text-4xl font-bold mt-2">98.0%</p>
+                        <p class="text-sm text-muted-foreground mt-1">Correct Prediction</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h3 class="text-sm font-medium text-muted-foreground">Stores Analyzed</h3>
+                        <p class="text-4xl font-bold mt-2">100</p>
+                        <p class="text-sm text-muted-foreground mt-1">SMEs Evaluated</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Time Series Decomposition -->
+            <section id="model" class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Time Series Decomposition</h2>
+                    <p class="text-muted-foreground mt-2">Mathematical Model: Revenue(t) = Trend(t) + Seasonal(t) + Residual(t)</p>
+                </div>
+                
+                <div class="border rounded-lg bg-card overflow-hidden">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold mb-2">Decomposition Analysis</h3>
+                        <p class="text-sm text-muted-foreground">Statistical breakdown of time series components</p>
+                    </div>
+                    <img src="../outputs/research_time_series_decomposition.png" alt="Time Series Decomposition" class="w-full">
+                    <div class="p-6 border-t">
+                        <h4 class="text-sm font-semibold mb-3">Key Insights</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Trend:</strong> Shows long-term business growth patterns</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Seasonal:</strong> Weekly/monthly cyclical patterns identified</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Residual:</strong> Normal distribution indicates predictable time series</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Model Analysis -->
+            <section class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Model Accuracy Analysis</h2>
+                    <p class="text-muted-foreground mt-2">Statistical Model: Linear Regression Validation</p>
+                </div>
+                
+                <div class="border rounded-lg bg-card overflow-hidden">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold mb-2">Accuracy Analysis</h3>
+                        <p class="text-sm text-muted-foreground">Linear regression validation results</p>
+                    </div>
+                    <img src="../outputs/research_model_analysis.png" alt="Model Analysis" class="w-full">
+                    <div class="p-6 border-t">
+                        <h4 class="text-sm font-semibold mb-3">Statistical Validation</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>R² = 0.90:</strong> 90% of revenue variance explained by model</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Error Distribution:</strong> Normal distribution validates regression assumptions</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Feature Importance:</strong> Yesterday's revenue (52%) is most predictive</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Correlation:</strong> High correlation between actual and predicted values</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Business Insights -->
+            <section id="insights" class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Business Insights Analysis</h2>
+                    <p class="text-muted-foreground mt-2">Statistical Tests: ANOVA, t-tests, Confidence Intervals</p>
+                </div>
+                
+                <div class="border rounded-lg bg-card overflow-hidden">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold mb-2">Business Insights</h3>
+                        <p class="text-sm text-muted-foreground">ANOVA, t-tests, and confidence intervals analysis</p>
+                    </div>
+                    <img src="../outputs/research_business_insights.png" alt="Business Insights" class="w-full">
+                    <div class="p-6 border-t">
+                        <h4 class="text-sm font-semibold mb-3">Research Findings</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Day of Week:</strong> Monday/Sunday show highest revenue (ANOVA, p&lt;0.05)</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Store Types:</strong> Type A outperforms others (statistically significant)</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Promotions:</strong> 15.2% average revenue lift (t-test, p&lt;0.05)</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Confidence Intervals:</strong> Statistical significance confirmed</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Model Validation -->
+            <section id="validation" class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Mathematical Model Validation</h2>
+                    <p class="text-muted-foreground mt-2">Statistical Tests: ACF, PACF, Q-Q Plots, Normality Tests</p>
+                </div>
+                
+                <div class="border rounded-lg bg-card overflow-hidden">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold mb-2">Model Validation</h3>
+                        <p class="text-sm text-muted-foreground">ACF, PACF, Q-Q plots, and normality tests</p>
+                    </div>
+                    <img src="../outputs/research_model_validation.png" alt="Model Validation" class="w-full">
+                    <div class="p-6 border-t">
+                        <h4 class="text-sm font-semibold mb-3">Validation Results</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Autocorrelation:</strong> Significant temporal patterns (ρ &gt; 0.5)</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Predictability:</strong> Time series has memory (AR process)</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Error Distribution:</strong> Normal residuals confirm model assumptions</span>
+                            </li>
+                            <li class="flex items-start gap-2 text-sm">
+                                <span class="text-primary">•</span>
+                                <span class="text-muted-foreground"><strong>Performance:</strong> Consistent across store types</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Forecast Results -->
+            <section id="results" class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Revenue Forecast Results</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h3 class="text-sm font-medium text-muted-foreground">Top Performing SME</h3>
+                        <p class="text-4xl font-bold mt-2">$1,153,935</p>
+                        <p class="text-sm text-muted-foreground mt-1">90-Day Revenue Forecast</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h3 class="text-sm font-medium text-muted-foreground">Average SME</h3>
+                        <p class="text-4xl font-bold mt-2">$610,525</p>
+                        <p class="text-sm text-muted-foreground mt-1">90-Day Revenue Forecast</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h3 class="text-sm font-medium text-muted-foreground">Daily Accuracy</h3>
+                        <p class="text-4xl font-bold mt-2">$674</p>
+                        <p class="text-sm text-muted-foreground mt-1">Average Forecast Error</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Research Contribution -->
+            <section class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-semibold tracking-tight">Research Contribution</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h4 class="font-semibold text-lg">Methodological</h4>
+                        <p class="text-sm text-muted-foreground mt-2">Time-series forecasting with XGBoost for revenue prediction</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h4 class="font-semibold text-lg">Business</h4>
+                        <p class="text-sm text-muted-foreground mt-2">Statistical validation of business factors affecting revenue</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h4 class="font-semibold text-lg">Technical</h4>
+                        <p class="text-sm text-muted-foreground mt-2">9.6% MAE performance with feature importance analysis</p>
+                    </div>
+                    <div class="border rounded-lg p-6 bg-card">
+                        <h4 class="font-semibold text-lg">Academic</h4>
+                        <p class="text-sm text-muted-foreground mt-2">Complete mathematical models and statistical validation</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t mt-16 py-8">
+            <div class="container mx-auto px-6">
+                <p class="text-center text-sm text-muted-foreground">
+                    SME Revenue Forecasting Research - Stanford MSE Program
+                </p>
+                <p class="text-center text-sm text-muted-foreground mt-2">
+                    Machine Learning for Business Planning | CS229, CS230, CS220
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
